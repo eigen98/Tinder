@@ -1,0 +1,62 @@
+이 챕터를 통해 배우는 것
+Firebase Authenetication 사용하기
+
+Email Login
+Facebook Login
+Firebase Realtime Database 사용하기
+
+yuyakaido/CardStackView 사용하기
+
+틴더
+Firebase Authentication 을 통해 이메일 로그인과 페이스북 로그인을 할 수 있음.
+
+Firebase Realtime Database 를 이용하여 기록을 저장하고, 불러올 수 있음.
+
+Github에서 Opensource Library 를 찾아 사용할 수 있음.
+
+목차
+1.인트로 (완성앱 & 구현 기능 소개)
+2.Firebase 환경설정하기
+    ->Firebase gradle 추가
+    ->Authentication 추가, Realtime DataBase 만들기 해줌
+    ->Json 설정 파일에 realTimeDatabase권한을 추가해줘야함.
+        ->firebase 프로젝트 설정에가서 서비스json파일을 다시 다운로드
+        ->기존 json에 붙여넣기해줌.
+
+3.이메일 로그인 구현하기(Authentication)
+    ->Firebase콘솔에서 Authentication에서email 로그인 활성화
+    -> 프로젝트에 Auth추가 implementation 'com.google.firebase:firebase-auth-ktx'
+        ->Firebase.호출 가능해짐.
+    ->로그인액티비티 추가
+        LoginActivity에서 emailpassword를 받아와서 firebase에 전달하여 추가
+
+        //이메일과 패스워드 파라미터로 auth에 있는 signin기능 사용 가능
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->  //로그인이 성공이라면
+                            if(task.isSuccessful){
+                                finish()    //로그인 액티비티 종료
+                            }else{
+                                Toast.makeText(this, "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+        //signUp기능 사용
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) {task ->
+                            if(task.isSuccessful){
+                                Toast.makeText(this, "회원가입에 성공했습니다. 로그인 버튼을 눌러 로그인해주세요.",Toast.LENGTH_SHORT).show()
+                            }else{
+                                Toast.makeText(this, "이미 가입한 이메일이거나, 회원가입에 실패했습니다.",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+        ->이메일 비밀번호 칸이 비어있을 때 예외처리 필요(리스너 이용)
+
+4.Facebook 환경설정하기
+5.Facebook 로그인 구현하기
+6.Firebase Realtime Database 연동하기
+7.Swipe Animation 라이브러리 사용해보기
+8.Like DB 연동하기
+9.Match 된 유저목록 보여주기
+10.어떤 것을 추가로 개발할 수 있을까?
+마무리

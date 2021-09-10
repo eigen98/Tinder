@@ -53,8 +53,84 @@ Github에서 Opensource Library 를 찾아 사용할 수 있음.
         ->이메일 비밀번호 칸이 비어있을 때 예외처리 필요(리스너 이용)
 
 4.Facebook 환경설정하기
+    ->페이스북 for Developer 에서 firebase와 연결()
+    ->gradle에 implementation 'com.facebook.android:facebook-login:8.2.0'
+        buildscript {
+                mavenCentral() 추가
+            }
+        allprojects {
+                mavenCentral()
+            }
+        }
+
+    -> 빠른시작으로 돌아와서 안드로이드 프로젝트에 대해서 facebook에 알리기
+
 5.Facebook 로그인 구현하기
+    https://developers.facebook.com/docs/facebook-login/android/?locale=ko_KR
+    ->앱 선택 또는 새앱 만들기
+    ->리소스 및 메니페스트 수정
+        ->value에 추가 <string name="facebook_app_id">1431286343909792</string> <string name="fb_login_protocol_scheme">fb1431286343909792</string>
+    -> application 요소 뒤에 다음 <uses-permission android:name="android.permission.INTERNET"/>
+    -> 다음 meta-data 요소, Facebook에 대한 활동, Chrome 맞춤 탭에 대한 활동 및 인텐트 필터를 application 요소 내에 추가합니다.
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" />
+         <activity android:name="com.facebook.CustomTabActivity" android:exported="true">
+          <intent-filter> <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="@string/fb_login_protocol_scheme" />
+
+          </intent-filter> </activity>
+    ->릴리즈키는 배포시 고려
+    -> 로그인 액티비티로 돌아와서
+        페이스북 로그인 버튼 com.facebook.login.widget.LoginButton
+
+    ->콜백매니저 추가
+        (페이스북 버튼 누르면 페이스북 열린 후 완료 후 다시 액티비티로 넘어오는 액티비티 콜백으로 넘어옴. -> OnActivityResult 오버라이드)
+        private lateinit var callbackManager: CallbackManager
+         callbackManager = CallbackManager.Factory.create()
+
+         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+                 super.onActivityResult(requestCode, resultCode, data)
+
+                 callbackManager.onActivityResult(requestCode, resultCode, data)
+             }
+
+      private fun initFacebookLoginButton() {
+              val facebookLoginButton = findViewById<LoginButton>(R.id.facebookLoginButton)
+              //permission설정
+              facebookLoginButton.setPermissions("email", "public_profile") //받아올 정보. 이메일과 유저프로필을 받아온다.
+              //콜백을 등록해준다.
+              facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
+
+                  override fun onSuccess(result: LoginResult?) {
+                     //로그인이 성공적 -> 로그인 Access토큰을 가져와서 firebase에 넘기는 과정
+                  }
+
+                  override fun onCancel() {
+                      //로그인하다가 취소
+                  }
+
+                  override fun onError(error: FacebookException?) {
+
+                      Toast.makeText(this@LoginActivity, "페이스북 로그인이 실패했습니다.", Toast.LENGTH_SHORT).show()
+
+                  }
+
+              })//콜백 추가
+          }
+
+       -> 로그인이 성공적이라면 LoginResult에서 Access토큰을 가져온다음에 로그인이 완료되었을 때  firebase에 알려주어야함.(access토큰을 우리서버에 저장하는 것이 아님)
+       로그인 Access토큰을 가져와서 firebase에 넘기는 과정
+
+
+
 6.Firebase Realtime Database 연동하기
+    ->이름을 추가하는 과정 실습
+    ->likeActivity 생성
+
+    ->Build.gradle에 realTimeDatabase 추가
+       implementation 'com.google.firebase:firebase-database-ktx'
 7.Swipe Animation 라이브러리 사용해보기
 8.Like DB 연동하기
 9.Match 된 유저목록 보여주기

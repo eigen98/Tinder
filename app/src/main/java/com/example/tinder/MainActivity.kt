@@ -18,8 +18,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if(auth.currentUser == null){
+        if(auth.currentUser == null){//현재 로그인이 되어있지 않다면
             startActivity(Intent(this,LoginActivity::class.java))
+        }else{//로그인이 되어있다면 (라우터형식??)
+            startActivity(Intent(this,LikeActivity::class.java))
         }
     }
 }

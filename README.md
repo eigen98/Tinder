@@ -1,11 +1,20 @@
 # Tinder
 
 이 챕터를 통해 배우는 것
-Firebase Authenetication 사용하기
+Firebase Authenetication 사용하기   
 
-Email Login
-Facebook Login
-Firebase Realtime Database 사용하기
+    ->email 로그인과정
+        ->createUserWithEmailAndPassword()함수 사용을했고 
+        addOncompleteListner를 통해서 결과값을 받아옴
+        (원래는 retrofit을 통하여 네트워크처리 데이터 처리를 직접해줘야했지만 firebase에서 알아서 다 해줌.)
+    ->facebook로그인과정
+
+Firebase Realtime Database 사용하기(Jason, 즉key-value형식으로 저장)
+    ->DatabaseReference에서 사용.
+    ->reference.child.child.child형태
+    ->addListnerForSingleValueEvent 함수는 즉시성으로 발효되고 한 번만 불러옴 -> 유저정보를 불러오기위해 한 번 불러옴
+        -> addChildEventListener함수를 후에 사용함으로써 전체 유저 테이블에 대한 change를 다 보고 이벤트를 받음
+    -> 
 
 yuyakaido/CardStackView 사용하기
 

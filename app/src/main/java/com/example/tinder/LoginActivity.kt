@@ -19,6 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+
 class LoginActivity : AppCompatActivity() {
 
 
@@ -29,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        auth = Firebase.auth
-        callbackManager = CallbackManager.Factory.create()
+        auth = Firebase.auth        //
+        callbackManager = CallbackManager.Factory.create()  //콜백매니저 초기화
 
 
         initLoginButton()
@@ -88,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
         val signUpButton = findViewById<Button>(R.id.signUpButton)
 
         emailEditText.addTextChangedListener {
-            val enable = emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()
+            val enable = emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()  //비어있지않을 때만 true값 반환
             loginButton.isEnabled = enable
             signUpButton.isEnabled = enable
 
@@ -110,13 +111,13 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onSuccess(result: LoginResult) {
                //로그인이 성공적 ->로그인 Access토큰을 가져와서 firebase에 넘기는 과정
-                val credential = FacebookAuthProvider.getCredential(result.accessToken.token)
-                auth.signInWithCredential(credential)
-                    .addOnCompleteListener(this@LoginActivity) {task ->
+                val credential = FacebookAuthProvider.getCredential(result.accessToken.token)   //토큰생성
+                auth.signInWithCredential(credential)   //토큰 넘기기
+                    .addOnCompleteListener(this@LoginActivity) {task -> //컨텍스트LoginActivity주의
                         if(task.isSuccessful){
                             handleSuccessLogin()
                         }else{
-                            Toast.makeText(this@LoginActivity, "페이스북 로그인이 실패했습니다.",Toast.LENGTH_SHORT)
+                            Toast.makeText(this@LoginActivity, "페이스북 로그인이 실패했습니다.",Toast.LENGTH_SHORT).show()
                         }
 
                     }
@@ -151,11 +152,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleSuccessLogin(){
-        if(auth.currentUser == null){
+        if(auth.currentUser == null){   //currentUser는 null이 가능함
             Toast.makeText(this, "로그인에 실패했습니다.",Toast.LENGTH_SHORT).show()
             return
         }
-
+    //성공했다면 유저id가져오기
         val userId = auth.currentUser?.uid.orEmpty()    //userid가져오기 //null일경우를 대비해서 orEmpty
         //reference에서 Users라는 child를 선택
         val currentUserDB = Firebase.database.reference.child("Users").child(userId)

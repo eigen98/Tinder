@@ -12,16 +12,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
     }
 
     override fun onStart() {
         super.onStart()
 
-        if(auth.currentUser == null){//현재 로그인이 되어있지 않다면
+        if(auth.currentUser == null){//로그인정보 저장소 currentUser//현재 로그인이 되어있지 않다면
             startActivity(Intent(this,LoginActivity::class.java))
         }else{//로그인이 되어있다면 (라우터형식??)
             startActivity(Intent(this,LikeActivity::class.java))
+            finish()//라이크액티비티가 열리면 메인은 꺼줌
         }
     }
 }

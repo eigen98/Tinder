@@ -26,34 +26,34 @@ Firebase Realtime Database 를 이용하여 기록을 저장하고, 불러올 �
 Github에서 Opensource Library 를 찾아 사용할 수 있음.
 
 
-![KakaoTalk_20210912_182304706](https://user-images.githubusercontent.com/68258365/132982270-324561e9-342f-4c3e-ab27-f5881849049c.jpg)
-![KakaoTalk_20210912_182304706_01](https://user-images.githubusercontent.com/68258365/132982272-395933ef-7d1d-4326-be93-962fd25f10e2.jpg)
+![KakaoTalk_20210912_182304706](https://user-images.githubusercontent.com/68258365/132982270-324561e9-342f-4c3e-ab27-f5881849049c.jpg)    
+![KakaoTalk_20210912_182304706_01](https://user-images.githubusercontent.com/68258365/132982272-395933ef-7d1d-4326-be93-962fd25f10e2.jpg)    
+   
 
 
+   
 
-
-
-
+   
 목차
-1.인트로 (완성앱 & 구현 기능 소개)
-2.Firebase 환경설정하기
-    ->Firebase gradle 추가
-    ->Authentication 추가, Realtime DataBase 만들기 해줌
-    ->Json 설정 파일에 realTimeDatabase권한을 추가해줘야함.
-        ->firebase 프로젝트 설정에가서 서비스json파일을 다시 다운로드
-        ->기존 json에 붙여넣기해줌.
+1.인트로 (완성앱 & 구현 기능 소개)    
+2.Firebase 환경설정하기    
+    ->Firebase gradle 추가      
+    ->Authentication 추가, Realtime DataBase 만들기 해줌   
+    ->Json 설정 파일에 realTimeDatabase권한을 추가해줘야함.   
+        ->firebase 프로젝트 설정에가서 서비스json파일을 다시 다운로드   
+        ->기존 json에 붙여넣기해줌.   
 
-3.이메일 로그인 구현하기(Authentication)
-    ->Firebase콘솔에서 Authentication에서email 로그인 활성화
-    -> 프로젝트에 Auth추가 implementation 'com.google.firebase:firebase-auth-ktx'
-        ->Firebase.호출 가능해짐.
-    ->로그인액티비티 추가
-        LoginActivity에서 emailpassword를 받아와서 firebase에 전달하여 추가
-
-        //이메일과 패스워드 파라미터로 auth에 있는 signin기능 사용 가능
-                    auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this) { task ->  //로그인이 성공이라면
-                            if(task.isSuccessful){
+3.이메일 로그인 구현하기(Authentication)   
+    ->Firebase콘솔에서 Authentication에서email 로그인 활성화   
+    -> 프로젝트에 Auth추가 implementation 'com.google.firebase:firebase-auth-ktx'    
+        ->Firebase.호출 가능해짐.   
+    ->로그인액티비티 추가    
+        LoginActivity에서 emailpassword를 받아와서 firebase에 전달하여 추가    
+    
+        //이메일과 패스워드 파라미터로 auth에 있는 signin기능 사용 가능    
+                    auth.signInWithEmailAndPassword(email, password)    
+                        .addOnCompleteListener(this) { task ->  //로그인이 성공이라면   
+                            if(task.isSuccessful){     
                                 finish()    //로그인 액티비티 종료
                             }else{
                                 Toast.makeText(this, "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
